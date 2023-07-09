@@ -28,6 +28,7 @@ jobs:
         run: |
           npm ci
           npm run build
+        working-directory: esi-app
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
