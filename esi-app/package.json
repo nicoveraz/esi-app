@@ -1,6 +1,6 @@
 {
   "name": "esi-app",
-  "description": "Webcomponent esi-app following open-wc recommendations",
+  "description": "Aplicación entrenamiento Triage ESI",
   "license": "MIT",
   "author": "esi-app",
   "version": "0.0.0",
