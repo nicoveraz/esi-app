@@ -236,7 +236,7 @@ export class EsiApp extends LitElement {
             <p>Ó</p>
             <li>Requiere estímulo nocivo (D o I en la escala AVDI)</li>
           </ol>
-          <img src="../assets/avdi.jpg" alt="Escala AVDI">
+          <img src="./assets/avdi.jpg" alt="Escala AVDI">
         </div>
       `;
     }
