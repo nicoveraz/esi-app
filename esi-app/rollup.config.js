@@ -36,7 +36,7 @@ export default {
       targets: [
         { src: 'assets/*', dest: 'dist/esi-app/assets' }
       ]
-    })
+    }),
 
     /** Compile JS to a lower language target */
     babel({
