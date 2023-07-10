@@ -14,6 +14,7 @@ export default {
     assetFileNames: '[hash][extname]',
     format: 'es',
     dir: 'dist',
+    publicPath: '/esi-app/',
   },
   preserveEntrySignatures: false,
 
@@ -22,7 +23,7 @@ export default {
     html({
       minify: true,
       injectServiceWorker: true,
-      serviceWorkerPath: 'dist/sw.js',
+      serviceWorkerPath: 'dist/esi-app/sw.js',
     }),
     /** Resolve bare module imports */
     nodeResolve(),
@@ -68,9 +69,9 @@ export default {
     }),
     /** Create and inject a service worker */
     generateSW({
-      navigateFallback: '/index.html',
+      navigateFallback: '/esi-app/index.html',
       // where to output the generated sw
-      swDest: path.join('dist', 'sw.js'),
+      swDest: path.join('dist/esi-app/', 'sw.js'),
       // directory to match patterns against to be precached
       globDirectory: path.join('dist'),
       // cache any html js and css by default
