@@ -78,7 +78,7 @@ export default {
     }),
     /** Create and inject a service worker */
     generateSW({
-      navigateFallback: '/index.html',
+      navigateFallback: 'dist/index.html',
       // where to output the generated sw
       swDest: path.join('dist/', 'sw.js'),
       // directory to match patterns against to be precached
