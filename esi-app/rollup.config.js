@@ -22,7 +22,7 @@ export default {
     html({
       minify: true,
       injectServiceWorker: true,
-      serviceWorkerPath: 'dist/esi-app/sw.js',
+      serviceWorkerPath: 'dist/sw.js',
     }),
     /** Resolve bare module imports */
     nodeResolve(),
