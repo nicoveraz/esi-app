@@ -34,7 +34,9 @@ export default {
     /** Copy assets folder to dist */
     copy({
       targets: [
-        { src: 'assets/*', dest: 'dist/assets' }
+        { src: 'assets/*', dest: 'dist/assets' },
+        { src: 'manifest.json', dest: 'dist' },
+        { src: 'favicon.ico', dest: 'dist' },
       ]
     }),
 
