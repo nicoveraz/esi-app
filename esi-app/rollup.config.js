@@ -34,7 +34,7 @@ export default {
     /** Copy assets folder to dist */
     copy({
       targets: [
-        { src: 'assets/*', dest: 'dist/esi-app/assets' }
+        { src: 'assets/*', dest: 'dist/assets' }
       ]
     }),
 
