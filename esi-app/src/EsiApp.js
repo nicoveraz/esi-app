@@ -47,7 +47,7 @@ export class EsiApp extends LitElement {
         box-sizing: var(--default-box-sizing);
       }
 
-      header, vaadin-form-layout, .esi-uno, .ejemplos, .def-esi-uno {
+      vaadin-form-layout, .esi-uno, .ejemplos, .def-esi-uno {
         box-sizing: var(--default-box-sizing);
         padding: var(--default-padding);
       }
@@ -75,6 +75,8 @@ export class EsiApp extends LitElement {
         background-color: var(--header-background-color);
         color: var(--header-color);
         font-size: var(--primary-font-size);
+        padding: calc(var(--default-padding) / 2) var(--default-padding);
+        box-sizing: var(--default-box-sizing);
       }
 
       header h1 {
@@ -83,6 +85,7 @@ export class EsiApp extends LitElement {
         font-weight: var(--primary-font-weight);
         line-height: var(--primary-line-height);
         text-align: left;
+
       }
 
       .esi-uno {
