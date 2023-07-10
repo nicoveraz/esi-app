@@ -4,6 +4,7 @@
   "license": "MIT",
   "author": "esi-app",
   "version": "0.0.0",
+  "homepage": "https://nicoveraz.github.io/esi-app/",
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.js && npm run analyze -- --exclude dist",
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
