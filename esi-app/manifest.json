@@ -1,0 +1,22 @@
+{
+  "short_name": "ESI App",
+  "name": "Aplicación para triage ESI",
+  "description": "Aplicación de apoyo a la categorización ESI en urgencia",
+  "icons": [
+    {
+      "src": "/assets/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#000000"
+}
