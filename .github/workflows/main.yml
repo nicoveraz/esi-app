@@ -35,4 +35,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist  # Replace with the directory of your build output if not "dist"
+          folder: esi-app/dist  # Replace with the directory of your build output if not "dist"
