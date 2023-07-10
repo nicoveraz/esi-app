@@ -194,6 +194,7 @@ export class EsiApp extends LitElement {
               .items="${['SI', 'NO']}">
             </vaadin-combo-box>
           </vaadin-form-layout>
+          ${this.high_risk? '' : this.renderDefEsiDos()}
           ${this.high_risk === 'SI' ? this.renderEsiTwo() : ''}
         `;
       }
@@ -203,6 +204,7 @@ export class EsiApp extends LitElement {
     renderEsiTwo() {
       return html`
         <div class="esi-uno esi-dos">ESI 2</div>
+        ${this.renderDefEsiDos()}
       `;
     }
 
@@ -257,22 +259,16 @@ export class EsiApp extends LitElement {
     renderDefEsiDos() {
       return html`
       <div class="def-esi-uno">
-      ¿debería esperar el
-      paciente?
-      Si la respuesta es “NO”, se clasifica como nivel 2
-      del ESI; si el paciente puede esperar, se avanza
-      al siguiente paso del algoritmo, punto de decisión
-      C.
-      Se utilizan 3 preguntas generales para determinar
-      si el paciente cumple con los criterios
-      correspondientes al nivel 2.
-      1.- ¿Es una situación de alto riesgo?
-      2.- ¿El paciente está confundido, letárgico o
-      desorientado?
-      3.- ¿El paciente experimenta dolor o malestar
-      severo?
-      En este ítem se debe aplicar Escala numérica del
-      dolor (Anexo 3) y AVDI (Anexo 4).
+        <p><strong>¿debería esperar el paciente?</strong>Si la respuesta es “NO”, se clasifica como nivel 2</p>
+        <p><strong>Se utilizan 3 preguntas generales para determinar si el paciente cumple con los criterios correspondientes al nivel 2:</strong></p>
+        <ol>
+          <li>¿Es una situación de alto riesgo?</li>
+          <li>¿El paciente está confundido, letárgico o desorientado?</li>
+          <li>¿El paciente experimenta dolor o malestar severo?</li>
+        </ol>
+        <p>En este ítem se debe aplicar Escala numérica del dolor y AVDI</p>
+        <img src="./assets/avdi.jpg" alt="Escala AVDI">
+        <img src="./assets/eva.jpg" alt="Escala EVA">
       </div>
       `;
     }
