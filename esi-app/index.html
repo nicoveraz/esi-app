@@ -10,6 +10,36 @@
 
   <link rel="manifest" href="./manifest.json">
 
+  <script>
+    window.isUpdateAvailable = new Promise((resolve, reject) => {
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('./sw.js')
+              .then(reg => {
+                reg.onupdatefound = () => {
+                  const installingWorker = reg.installing;
+                  installingWorker.onstatechange = () => {
+                    switch (installingWorker.state) {
+                      case 'installed':
+                        if (navigator.serviceWorker.controller) {
+                          console.log('Nueva version disponible');
+                          installingWorker.postMessage({ type: 'SKIP_WAITING' });
+                          resolve(true);
+                        } else {
+                          console.log('No hay nueva version disponible');
+                          resolve(false);
+                        }
+                        break;
+                    }
+                  };
+                };
+              })
+              .catch(err => console.error('[SW ERROR]', err));
+              });
+          }
+        });
+  </script>
+
   <style>
     html,
     body {

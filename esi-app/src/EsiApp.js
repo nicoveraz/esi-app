@@ -119,6 +119,10 @@ export class EsiApp extends LitElement {
       .def-esi-uno > img {
         width: 100%;
       }
+      .recargar {
+        --mdc-theme-primary: var(--header-background-color);
+        --mdc-theme-on-primary: var(--header-color);
+      }
     `;
   }
 
@@ -128,6 +132,12 @@ export class EsiApp extends LitElement {
     super();
     this.title = 'Categorización ESI CPM';
     this.life_saving = null;
+    window.isUpdateAvailable.then((r) => {
+      if (r === true) {
+        window.prompt('Hay una nueva versión disponible, ¿recargar?', 'Recargar');
+        window.location.reload();
+      }
+    });
   }
 
     render() {
