@@ -54,7 +54,7 @@ export class EsiApp extends LitElement {
 
       main {
         flex-grow: 1;
-        padding: 0 var(--default-padding) var(--default-padding);
+        padding: 0;
       }
 
       main > div {
@@ -145,6 +145,9 @@ export class EsiApp extends LitElement {
         <main>
           <header>
             <h1>${this.title}</h1>
+            <a href="https://github.com/nicoveraz/esi-app" target="_blank">
+            <img src="./assets/github.svg" alt="GitHub Logo" width="32" height="32">
+          </a>
           </header>
           <div>
             ${this.renderLifeSavingQuestion()}
@@ -248,6 +251,29 @@ export class EsiApp extends LitElement {
           </ol>
           <img src="./assets/avdi.jpg" alt="Escala AVDI">
         </div>
+      `;
+    }
+
+    renderDefEsiDos() {
+      return html`
+      <div class="def-esi-uno">
+      ¿debería esperar el
+      paciente?
+      Si la respuesta es “NO”, se clasifica como nivel 2
+      del ESI; si el paciente puede esperar, se avanza
+      al siguiente paso del algoritmo, punto de decisión
+      C.
+      Se utilizan 3 preguntas generales para determinar
+      si el paciente cumple con los criterios
+      correspondientes al nivel 2.
+      1.- ¿Es una situación de alto riesgo?
+      2.- ¿El paciente está confundido, letárgico o
+      desorientado?
+      3.- ¿El paciente experimenta dolor o malestar
+      severo?
+      En este ítem se debe aplicar Escala numérica del
+      dolor (Anexo 3) y AVDI (Anexo 4).
+      </div>
       `;
     }
 
