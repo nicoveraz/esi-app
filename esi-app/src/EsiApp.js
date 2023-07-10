@@ -262,7 +262,6 @@ export class EsiApp extends LitElement {
     renderDefEsiDos() {
       return html`
       <div class="def-esi-uno">
-        <p><strong>¿debería esperar el paciente?</strong>Si la respuesta es “NO”, se clasifica como nivel 2</p>
         <p><strong>Se utilizan 3 preguntas generales para determinar si el paciente cumple con los criterios correspondientes al nivel 2:</strong></p>
         <ol>
           <li>¿Es una situación de alto riesgo?</li>
