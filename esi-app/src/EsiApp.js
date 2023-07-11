@@ -110,6 +110,16 @@ export class EsiApp extends LitElement {
         color: var(--esi-uno-color);
       }
 
+      .esi-cuatro {
+        background-color: var(--esi-cuatro-background-color);
+        color: var(--esi-uno-color);
+      }
+
+      .esi-cinco {
+        background-color: var(--esi-cinco-background-color);
+        color: var(--esi-uno-color);
+      }
+
       label {
         font-size: var(--label-font-size);
       }
