@@ -29,11 +29,14 @@ export class EsiApp extends LitElement {
         --primary-font-size: 1.5rem;
         --primary-line-height: 1.5rem;
         --primary-font-weight: 400;
-        --label-font-size: 1.2rem;
+        --label-font-size: 1.6rem;
         --esi-uno-color: #fff;
         --esi-uno-background-color: #ff0000;
         --esi-dos-background-color: orange;
-        min-height: 100vh;
+        --esi-tres-background-color: yellow;
+        --esi-cuatro-background-color: #00ff00;
+        --esi-cinco-background-color: #00ffff;
+        min-height: 100vh
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -47,7 +50,7 @@ export class EsiApp extends LitElement {
         box-sizing: var(--default-box-sizing);
       }
 
-      vaadin-form-layout, .esi-uno, .ejemplos, .def-esi-uno {
+      vaadin-form-layout, .esi-uno, .def-esi-uno {
         box-sizing: var(--default-box-sizing);
         padding: var(--default-padding);
       }
@@ -61,7 +64,7 @@ export class EsiApp extends LitElement {
         max-width: 720px;
         margin: var(--default-padding) auto;
         background-color: white;
-        height: calc(100vh - 72px - 2 * var(--default-padding));
+        min-height: calc(100vh - 72px - var(--default-padding));
         border-radius: 0.5rem;
       }
 
@@ -102,7 +105,12 @@ export class EsiApp extends LitElement {
         color: var(--esi-uno-color);
       }
 
-      label, .ejemplos {
+      .esi-tres {
+        background-color: var(--esi-tres-background-color);
+        color: var(--esi-uno-color);
+      }
+
+      label {
         font-size: var(--label-font-size);
       }
 
@@ -168,7 +176,13 @@ export class EsiApp extends LitElement {
           <vaadin-combo-box
             clear-button-visible
             label="¿Requiere intervención inmediata para salvar su vida?"
-            @change="${(e) => this.life_saving = e.target.value}"
+            @change="${(e) => {
+              this.life_saving = e.target.value
+              // Resetting the properties if life_saving changes
+              this.high_risk = null;
+              this.num_resources = null;
+              this.edad = null;
+            }}"
             .value="${this.life_saving}"
             .items="${['SI', 'NO']}">
           </vaadin-combo-box>
@@ -185,6 +199,31 @@ export class EsiApp extends LitElement {
       `;
     }
 
+    renderEsiTwo() {
+      return html`
+        <div class="esi-uno esi-dos">ESI 2</div>
+        ${this.renderDefEsiDos()}
+      `;
+    }
+
+    renderEsiThree() {
+      return html`
+        <div class="esi-uno esi-tres">ESI 3</div>
+      `;
+    }
+
+    renderEsiFour() {
+      return html`
+        <div class="esi-uno esi-cuatro">ESI 4</div>
+      `;
+    }
+
+    renderEsiFive() {
+      return html`
+        <div class="esi-uno esi-cinco">ESI 5</div>
+      `;
+    }
+
     renderHighRiskQuestion() {
       if (this.life_saving === 'NO') {
         return html`
@@ -192,7 +231,12 @@ export class EsiApp extends LitElement {
             <vaadin-combo-box
               clear-button-visible
               label="¿Situación de alto riesgo?"
-              @change="${(e) => this.high_risk = e.target.value}"
+              @change="${(e) => {
+                this.high_risk = e.target.value
+                // Resetting the properties if high_risk changes
+                this.num_resources = null;
+                this.edad = null;
+              }}"
               .value="${this.high_risk}"
               .items="${['SI', 'NO']}">
             </vaadin-combo-box>
@@ -202,13 +246,6 @@ export class EsiApp extends LitElement {
         `;
       }
       return '';
-    }
-
-    renderEsiTwo() {
-      return html`
-        <div class="esi-uno esi-dos">ESI 2</div>
-        ${this.renderDefEsiDos()}
-      `;
     }
 
     renderResourceAgeQuestions() {
@@ -222,13 +259,31 @@ export class EsiApp extends LitElement {
               .value="${this.num_resources}"
               .items="${['Ninguno', 'Uno', 'Muchos']}">
             </vaadin-combo-box>
-            <vaadin-combo-box
-              clear-button-visible
-              label="Edad"
-              @change="${(e)=>this.edad = e.target.value}"
-              .value="${this.edad}"
-              .items="${['<1m', '1-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
-            </vaadin-combo-box>
+            ${
+              this.num_resources === 'Muchos'?
+                html`
+                  <vaadin-combo-box
+                    clear-button-visible
+                    label="Edad"
+                    @change="${(e)=>this.edad = e.target.value}"
+                    .value="${this.edad}"
+                    .items="${['<1m', '1-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
+                  </vaadin-combo-box>
+                ` : ''
+
+            }
+
+            ${
+              this.num_resources === 'Ninguno'?
+                this.renderEsiFive() : ''
+
+            }
+            ${
+              this.num_resources === 'Uno'?
+                this.renderEsiFour() : ''
+
+            }
+
           </vaadin-form-layout>
         `;
       }
@@ -271,6 +326,21 @@ export class EsiApp extends LitElement {
         <p>En este ítem se debe aplicar Escala numérica del dolor y AVDI</p>
         <img src="./assets/avdi.jpg" alt="Escala AVDI">
         <img src="./assets/eva.jpg" alt="Escala EVA">
+      </div>
+      `;
+    }
+
+    renderDefRecursos() {
+      return html`
+      <div class="def-esi-uno">
+        <p><strong>Recursos:</strong></p>
+        <ul>
+          <li>Recursos de laboratorio: laboratorio, radiología, ECG, etc.</li>
+          <li>Recursos de consultoría: médicos, enfermeras, etc.</li>
+          <li>Recursos de procedimiento: sutura, yeso, etc.</li>
+          <li>Recursos de observación: camas de observación, monitoreo, etc.</li>
+          <li>Recursos de tratamiento: medicamentos, líquidos, etc.</li>
+        </ul>
       </div>
       `;
     }
