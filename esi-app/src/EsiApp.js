@@ -33,7 +33,7 @@ export class EsiApp extends LitElement {
         --esi-uno-color: #fff;
         --esi-uno-background-color: #ff0000;
         --esi-dos-background-color: orange;
-        --esi-tres-background-color: yellow;
+        --esi-tres-background-color: #ffd700;
         --esi-cuatro-background-color: #228B22;
         --esi-cinco-background-color: #1E90FF;
         min-height: 100vh
@@ -151,7 +151,7 @@ export class EsiApp extends LitElement {
 
   constructor() {
     super();
-    this.title = 'Categorización ESI CPM';
+    this.title = 'Categorización ESI';
     this.life_saving = null;
     window.isUpdateAvailable.then((r) => {
       if (r === true) {
@@ -219,6 +219,15 @@ export class EsiApp extends LitElement {
     renderEsiThree() {
       return html`
         <div class="esi-uno esi-tres">ESI 3</div>
+        <vaadin-form-layout>
+          <vaadin-combo-box
+            clear-button-visible
+            label="Edad"
+            @change="${(e)=>this.edad = e.target.value}"
+            .value="${this.edad}"
+            .items="${['<1m', '1-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
+          </vaadin-combo-box>
+        </vaadin-form-layout>
       `;
     }
 
@@ -269,20 +278,8 @@ export class EsiApp extends LitElement {
               .value="${this.num_resources}"
               .items="${['Ninguno', 'Uno', 'Muchos']}">
             </vaadin-combo-box>
-            ${
-              this.num_resources === 'Muchos'?
-                html`
-                  <vaadin-combo-box
-                    clear-button-visible
-                    label="Edad"
-                    @change="${(e)=>this.edad = e.target.value}"
-                    .value="${this.edad}"
-                    .items="${['<1m', '1-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
-                  </vaadin-combo-box>
-                ` : ''
-
-            }
           </vaadin-form-layout>
+          ${this.num_resources? '' : this.renderDefRecursos()}
           ${
             this.num_resources === 'Ninguno'?
               this.renderEsiFive() : ''
@@ -292,6 +289,11 @@ export class EsiApp extends LitElement {
             this.num_resources === 'Uno'?
               this.renderEsiFour() : ''
 
+          }
+
+          ${
+            this.num_resources === 'Muchos'?
+              this.renderEsiThree() : ''
           }
         `;
       }
