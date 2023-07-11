@@ -34,8 +34,8 @@ export class EsiApp extends LitElement {
         --esi-uno-background-color: #ff0000;
         --esi-dos-background-color: orange;
         --esi-tres-background-color: yellow;
-        --esi-cuatro-background-color: #00ff00;
-        --esi-cinco-background-color: #00ffff;
+        --esi-cuatro-background-color: #228B22;
+        --esi-cinco-background-color: #1E90FF;
         min-height: 100vh
         display: flex;
         flex-direction: column;
