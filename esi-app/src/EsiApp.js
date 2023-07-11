@@ -282,19 +282,17 @@ export class EsiApp extends LitElement {
                 ` : ''
 
             }
-
-            ${
-              this.num_resources === 'Ninguno'?
-                this.renderEsiFive() : ''
-
-            }
-            ${
-              this.num_resources === 'Uno'?
-                this.renderEsiFour() : ''
-
-            }
-
           </vaadin-form-layout>
+          ${
+            this.num_resources === 'Ninguno'?
+              this.renderEsiFive() : ''
+
+          }
+          ${
+            this.num_resources === 'Uno'?
+              this.renderEsiFour() : ''
+
+          }
         `;
       }
       return '';
