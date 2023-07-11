@@ -1,11 +1,19 @@
-# *Emergency Severity Index*
+# *Triage Urgencia*
 
 ## Objetivo
-Aplicación para entrenamiento en el uso de Triage ESI en Servicio de Urgencia
+Aplicación para entrenamiento en el Triage en Servicio de Urgencia
 
 ## Descripción
 
 PWA, utiliza LitHTML
+
+Trabajo en proceso:
+
+- [x] 1
+- [x] 2
+- [ ] 3
+- [ ] 4
+- [ ] 5
 
 ## Bibliografía
 
