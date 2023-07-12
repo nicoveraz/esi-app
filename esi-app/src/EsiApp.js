@@ -218,14 +218,13 @@ export class EsiApp extends LitElement {
 
     renderEsiThree() {
       return html`
-        <div class="esi-uno esi-tres">ESI 3</div>
         <vaadin-form-layout>
           <vaadin-combo-box
             clear-button-visible
             label="Edad"
             @change="${(e)=>this.edad = e.target.value}"
             .value="${this.edad}"
-            .items="${['<1m', '1-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
+            .items="${['<1m', '1-3m', '3-12m', '1-3a', '3-5a', '5-12a', '12-18a', '>18a']}">
           </vaadin-combo-box>
         </vaadin-form-layout>
       `;
@@ -331,7 +330,7 @@ export class EsiApp extends LitElement {
         <ol>
           <li>¿Es una situación de alto riesgo?</li>
           <li>¿El paciente está confundido, letárgico o desorientado?</li>
-          <li>¿El paciente experimenta dolor o malestar severo?</li>
+          <li>¿El paciente experimenta dolor o malestar severo? (EVA ≥7)</li>
         </ol>
         <p>En este ítem se debe aplicar Escala numérica del dolor y AVDI</p>
         <img src="./assets/avdi.jpg" alt="Escala AVDI">
@@ -343,13 +342,24 @@ export class EsiApp extends LitElement {
     renderDefRecursos() {
       return html`
       <div class="def-esi-uno">
-        <p><strong>Recursos:</strong></p>
+        <p>Contar el número de diferentes tipos de recursos, no las pruebas individuales o las radiografías (ejemplos: CBC, electrolitos y coagulación es igual a un recurso; hemograma más radiografía de tórax es igual a dos recursos).</p>
+        <p>Recursos:</p>
         <ul>
-          <li>Recursos de laboratorio: laboratorio, radiología, ECG, etc.</li>
-          <li>Recursos de consultoría: médicos, enfermeras, etc.</li>
-          <li>Recursos de procedimiento: sutura, yeso, etc.</li>
-          <li>Recursos de observación: camas de observación, monitoreo, etc.</li>
-          <li>Recursos de tratamiento: medicamentos, líquidos, etc.</li>
+          <li>fluidos IV (hidratación)</li>
+          <li>Medicamentos IV o IM o nebulizados</li>
+          <li>Consulta especializada</li>
+          <li>Procedimiento simple = 1 (sonda foley)</li>
+          <li>Procedimiento complejo = 2 (sutura)</li>
+        </ul>
+        <p>NO son recursos:</p>
+        <ul>
+          <li>Historia y examen físico (incluyendo pélvico)</li>
+          <li>Medicamentos VO</li>
+          <li>Hemoglucotest</li>
+          <li>Inmunización contra el tétanos</li>
+          <li>Repetición de recetas</li>
+          <li>Cuidado de heridas simples (vendajes, reevaluación)</li>
+          <li>Muletas, férulas, cabestrillos</li>
         </ul>
       </div>
       `;
@@ -360,6 +370,7 @@ export class EsiApp extends LitElement {
       this.high_risk = null;
       this.num_resources = null;
       this.edad = null;
+      this.sgs_vitales = null;
     }
 
 }
