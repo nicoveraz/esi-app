@@ -162,9 +162,9 @@ export class EsiApp extends LitElement {
     constructor() {
       super();
       this.title = 'Categorización ESI';
-      this.life_saving = 'NO';
-      this.high_risk = 'NO';
-      this.num_resources = 'Muchos';
+      // this.life_saving = 'NO';
+      // this.high_risk = 'NO';
+      // this.num_resources = 'Muchos';
       this.sgs_vitales_alto_riesgo = [
         { label: 'T > 38°C', value: 'NO' },
       ];
