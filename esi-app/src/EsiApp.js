@@ -453,7 +453,7 @@ export class EsiApp extends LitElement {
     renderDefRecursos() {
       return html`
       <div class="def-esi-uno">
-        <p>Contar el número de diferentes tipos de recursos, no las pruebas individuales o las radiografías (ejemplos: CBC, electrolitos y coagulación es igual a un recurso; hemograma más radiografía de tórax es igual a dos recursos).</p>
+        <p>Contar el número de diferentes tipos de recursos, no las pruebas individuales o las radiografías (ejemplos: Creatinina, electrolitos y coagulación es igual a un recurso; hemograma más radiografía de tórax es igual a dos recursos).</p>
         <p>Recursos:</p>
         <ul>
           <li>fluidos IV (hidratación)</li>
