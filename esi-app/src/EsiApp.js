@@ -24,6 +24,7 @@ export class EsiApp extends LitElement {
       sgs_vitales_riesgo_5_12a: { type: Array },
       sgs_vitales_riesgo_12_18a: { type: Array },
       sgs_vitales_riesgo_18a: { type: Array },
+      version: { type: String },
     };
   }
 
@@ -160,6 +161,9 @@ export class EsiApp extends LitElement {
         --mdc-theme-primary: var(--header-background-color);
         --mdc-theme-on-primary: var(--header-color);
       }
+      h1 > span {
+        font-size: 0.5em;
+      }
     `;
   }
 
@@ -168,6 +172,7 @@ export class EsiApp extends LitElement {
     constructor() {
       super();
       this.title = 'Categorización ESI';
+      this.version = 'v7.23';
       // this.life_saving = 'NO';
       // this.high_risk = 'NO';
       // this.num_resources = 'Muchos';
@@ -263,7 +268,7 @@ export class EsiApp extends LitElement {
       return html`
         <main>
           <header>
-            <h1>${this.title}</h1>
+            <h1>${this.title} <span>${this.version}</span></h1>
             <a href="https://github.com/nicoveraz/esi-app" target="_blank">
             <img src="./assets/github.svg" alt="GitHub Logo" width="32" height="32">
           </a>
