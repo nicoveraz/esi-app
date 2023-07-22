@@ -18,6 +18,12 @@ export class EsiApp extends LitElement {
       sgs_vitales_alto_riesgo: { type: Array },
       sgs_vitales_riesgo: { type: Array },
       sgs_vitales_riesgo_1_3m: { type: Array },
+      sgs_vitales_riesgo_3_12m: { type: Array },
+      sgs_vitales_riesgo_1_3a: { type: Array },
+      sgs_vitales_riesgo_3_5a: { type: Array },
+      sgs_vitales_riesgo_5_12a: { type: Array },
+      sgs_vitales_riesgo_12_18a: { type: Array },
+      sgs_vitales_riesgo_18a: { type: Array },
     };
   }
 
@@ -182,10 +188,56 @@ export class EsiApp extends LitElement {
       this.sgs_vitales_riesgo_3_12m = [
         { label: 'T > 39°C', value: 'NO' },
         { label: 'T < 36°C', value: 'NO' },
+        { label: 'Inmunizaciones incompletas', value: 'NO' },
+        { label: 'Fiebre sin foco', value: 'NO' },
         { label: 'FC > 180', value: 'NO' },
         { label: 'FR > 55', value: 'NO' },
         { label: 'SpO2 < 92%', value: 'NO' },
       ];
+      this.sgs_vitales_riesgo_1_3a = [
+        { label: 'T > 39°C', value: 'NO' },
+        { label: 'T < 36°C', value: 'NO' },
+        { label: 'Inmunizaciones incompletas', value: 'NO' },
+        { label: 'Fiebre sin foco', value: 'NO' },
+        { label: 'FC > 140', value: 'NO' },
+        { label: 'FR > 40', value: 'NO' },
+        { label: 'SpO2 < 92%', value: 'NO' },
+      ];
+      this.sgs_vitales_riesgo_3_5a = [
+        { label: 'T > 39°C', value: 'NO' },
+        { label: 'T < 36°C', value: 'NO' },
+        { label: 'Inmunizaciones incompletas', value: 'NO' },
+        { label: 'Fiebre sin foco', value: 'NO' },
+        { label: 'FC > 140', value: 'NO' },
+        { label: 'FR > 35', value: 'NO' },
+        { label: 'SpO2 < 92%', value: 'NO' },
+      ];
+      this.sgs_vitales_riesgo_5_12a = [
+        { label: 'T > 39°C', value: 'NO' },
+        { label: 'T < 36°C', value: 'NO' },
+        { label: 'Inmunizaciones incompletas', value: 'NO' },
+        { label: 'Fiebre sin foco', value: 'NO' },
+        { label: 'FC > 120', value: 'NO' },
+        { label: 'FR > 30', value: 'NO' },
+        { label: 'SpO2 < 92%', value: 'NO' },
+      ];
+      this.sgs_vitales_riesgo_12_18a = [
+        { label: 'T > 39°C', value: 'NO' },
+        { label: 'T < 36°C', value: 'NO' },
+        { label: 'Inmunizaciones incompletas', value: 'NO' },
+        { label: 'Fiebre sin foco', value: 'NO' },
+        { label: 'FC > 100', value: 'NO' },
+        { label: 'FR > 20', value: 'NO' },
+        { label: 'SpO2 < 92%', value: 'NO' },
+      ];
+      this.sgs_vitales_riesgo_18a = [
+        { label: 'T > 39°C', value: 'NO' },
+        { label: 'T < 36°C', value: 'NO' },
+        { label: 'FC > 100', value: 'NO' },
+        { label: 'FR > 20', value: 'NO' },
+        { label: 'SpO2 < 92%', value: 'NO' },
+      ];
+
       window.isUpdateAvailable.then((r) => {
         if (r === true) {
           window.prompt('Hay una nueva versión disponible, ¿recargar?', 'Recargar');
@@ -199,6 +251,11 @@ export class EsiApp extends LitElement {
       s == 'riesgo' ? this.sgs_vitales_riesgo[index].value = e.target.checked ? 'SI' : 'NO' : '';
       s == 'riesgo_1_3m' ? this.sgs_vitales_riesgo_1_3m[index].value = e.target.checked ? 'SI' : 'NO' : '';
       s == 'riesgo_3_12m' ? this.sgs_vitales_riesgo_3_12m[index].value = e.target.checked ? 'SI' : 'NO' : '';
+      s == 'riesgo_1_3a' ? this.sgs_vitales_riesgo_1_3a[index].value = e.target.checked ? 'SI' : 'NO' : '';
+      s == 'riesgo_3_5a' ? this.sgs_vitales_riesgo_3_5a[index].value = e.target.checked ? 'SI' : 'NO' : '';
+      s == 'riesgo_5_12a' ? this.sgs_vitales_riesgo_5_12a[index].value = e.target.checked ? 'SI' : 'NO' : '';
+      s == 'riesgo_12_18a' ? this.sgs_vitales_riesgo_12_18a[index].value = e.target.checked ? 'SI' : 'NO' : '';
+      s == 'riesgo_18a' ? this.sgs_vitales_riesgo_18a[index].value = e.target.checked ? 'SI' : 'NO' : '';
       this.requestUpdate();
     }
 
@@ -482,7 +539,113 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_1_3m.some(checkbox => checkbox.value === "SI") ? this.renderEsiTwo('Considerar') : ''}
+          ${this.sgs_vitales_riesgo_3_12m.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+        `;
+      }
+      if (edad === '1-3a') {
+        return html`
+          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+          <vaadin-form-layout>
+            <div>
+              ${this.sgs_vitales_riesgo_1_3a.map(
+                (checkbox, index) => html`
+                  <vaadin-checkbox
+                    label="${checkbox.label}"
+                    .checked="${checkbox.value === 'SI'}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_1_3a')}"
+                  ></vaadin-checkbox>
+                `
+              )}
+            </div>
+          </vaadin-form-layout>
+
+          ${this.sgs_vitales_riesgo_1_3a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+        `;
+      }
+
+      if (edad === '3-5a') {
+        return html`
+          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+          <vaadin-form-layout>
+            <div>
+              ${this.sgs_vitales_riesgo_3_5a.map(
+                (checkbox, index) => html`
+                  <vaadin-checkbox
+                    label="${checkbox.label}"
+                    .checked="${checkbox.value === 'SI'}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_3_5a')}"
+                  ></vaadin-checkbox>
+                `
+              )}
+            </div>
+          </vaadin-form-layout>
+
+          ${this.sgs_vitales_riesgo_3_5a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+        `;
+      }
+
+      if (edad === '5-12a') {
+        return html`
+          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+          <vaadin-form-layout>
+            <div>
+              ${this.sgs_vitales_riesgo_5_12a.map(
+                (checkbox, index) => html`
+                  <vaadin-checkbox
+                    label="${checkbox.label}"
+                    .checked="${checkbox.value === 'SI'}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_5_12a')}"
+                  ></vaadin-checkbox>
+                `
+              )}
+            </div>
+          </vaadin-form-layout>
+
+          ${this.sgs_vitales_riesgo_5_12a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+
+        `;
+      }
+
+      if (edad === '12-18a') {
+        return html`
+          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+          <vaadin-form-layout>
+            <div>
+              ${this.sgs_vitales_riesgo_12_18a.map(
+                (checkbox, index) => html`
+                  <vaadin-checkbox
+                    label="${checkbox.label}"
+                    .checked="${checkbox.value === 'SI'}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_12_18a')}"
+                  ></vaadin-checkbox>
+                `
+              )}
+            </div>
+          </vaadin-form-layout>
+
+          ${this.sgs_vitales_riesgo_12_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+
+        `;
+      }
+
+      if (edad === '>18a') {
+        return html`
+          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+          <vaadin-form-layout>
+            <div>
+              ${this.sgs_vitales_riesgo_18a.map(
+                (checkbox, index) => html`
+                  <vaadin-checkbox
+                    label="${checkbox.label}"
+                    .checked="${checkbox.value === 'SI'}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_18a')}"
+                  ></vaadin-checkbox>
+                `
+              )}
+            </div>
+          </vaadin-form-layout>
+
+          ${this.sgs_vitales_riesgo_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
         `;
       }
 
@@ -493,6 +656,12 @@ export class EsiApp extends LitElement {
       this.sgs_vitales_alto_riesgo.forEach(checkbox => checkbox.value = "NO");
       this.sgs_vitales_riesgo.forEach(checkbox => checkbox.value = "NO");
       this.sgs_vitales_riesgo_1_3m.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_3_12m.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_1_3a.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_3_5a.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_5_12a.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_12_18a.forEach(checkbox => checkbox.value = "NO");
+      this.sgs_vitales_riesgo_18a.forEach(checkbox => checkbox.value = "NO");
     }
 
     reset() {

@@ -14,4 +14,4 @@ Trabajo en proceso:
 - [x] 3
 - [x] 4
 - [x] 5
-- [ ] Signos vitales de riesgo según edad
+- [x] Signos vitales de riesgo según edad
