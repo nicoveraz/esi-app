@@ -26,7 +26,7 @@ var te,ie;class se extends v{constructor(){super(...arguments),this.renderOption
  * Copyright (c) 2017 - 2023 Vaadin Ltd.
  * This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
  */
-class re extends HTMLElement{static get version(){return"24.1.4"}}customElements.define("vaadin-lumo-styles",re);
+class re extends HTMLElement{static get version(){return"24.1.5"}}customElements.define("vaadin-lumo-styles",re);
 /**
  * @license
  * Copyright (c) 2017 - 2023 Vaadin Ltd.
@@ -250,7 +250,7 @@ let Ui=0,qi=0;const ji=[];let Wi=!1;const Yi={after:e=>({run:t=>window.setTimeou
  * @license
  * Copyright (c) 2021 - 2023 Vaadin Ltd.
  * This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
- */;let as;window.Vaadin||(window.Vaadin={}),window.Vaadin.registrations||(window.Vaadin.registrations=[]),window.Vaadin.developmentModeCallback||(window.Vaadin.developmentModeCallback={}),window.Vaadin.developmentModeCallback["vaadin-usage-statistics"]=function(){Bi(Hi)};const ns=new Set,ls=e=>class extends(rs(e)){static get version(){return"24.1.4"}static finalize(){super.finalize();const{is:e}=this;e&&!ns.has(e)&&(window.Vaadin.registrations.push(this),ns.add(e),window.Vaadin.developmentModeCallback&&(as=Zi.debounce(as,Ki,(()=>{window.Vaadin.developmentModeCallback["vaadin-usage-statistics"]()})),Qi(as)))}constructor(){super(),null===document.doctype&&console.warn('Vaadin components require the "standards mode" declaration. Please add <!DOCTYPE html> to the HTML document.')}}
+ */;let as;window.Vaadin||(window.Vaadin={}),window.Vaadin.registrations||(window.Vaadin.registrations=[]),window.Vaadin.developmentModeCallback||(window.Vaadin.developmentModeCallback={}),window.Vaadin.developmentModeCallback["vaadin-usage-statistics"]=function(){Bi(Hi)};const ns=new Set,ls=e=>class extends(rs(e)){static get version(){return"24.1.5"}static finalize(){super.finalize();const{is:e}=this;e&&!ns.has(e)&&(window.Vaadin.registrations.push(this),ns.add(e),window.Vaadin.developmentModeCallback&&(as=Zi.debounce(as,Ki,(()=>{window.Vaadin.developmentModeCallback["vaadin-usage-statistics"]()})),Qi(as)))}constructor(){super(),null===document.doctype&&console.warn('Vaadin components require the "standards mode" declaration. Please add <!DOCTYPE html> to the HTML document.')}}
 /**
  * @license
  * Copyright (c) 2021 - 2023 Vaadin Ltd.
