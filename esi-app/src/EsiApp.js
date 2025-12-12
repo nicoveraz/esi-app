@@ -544,7 +544,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_3_12m.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_3_12m.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
         `;
       }
       if (edad === '1-3a') {
@@ -564,7 +564,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_1_3a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_1_3a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
         `;
       }
 
@@ -585,7 +585,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_3_5a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_3_5a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
         `;
       }
 
@@ -606,7 +606,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_5_12a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_5_12a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
 
         `;
       }
@@ -628,7 +628,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_12_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_12_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
 
         `;
       }
@@ -650,7 +650,7 @@ export class EsiApp extends LitElement {
             </div>
           </vaadin-form-layout>
 
-          ${this.sgs_vitales_riesgo_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar al menos ESI 3</div>` : ''}
+          ${this.sgs_vitales_riesgo_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
         `;
       }
 
