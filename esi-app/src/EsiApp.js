@@ -17,6 +17,7 @@ export class EsiApp extends LitElement {
       edad: { type: String },
       sgs_vitales_alto_riesgo: { type: Array },
       sgs_vitales_riesgo: { type: Array },
+      sgs_vitales_mediano_riesgo_1_3m: { type: Array },
       sgs_vitales_riesgo_1_3m: { type: Array },
       sgs_vitales_riesgo_3_12m: { type: Array },
       sgs_vitales_riesgo_1_3a: { type: Array },
@@ -47,7 +48,7 @@ export class EsiApp extends LitElement {
         --esi-tres-background-color: #ffd700;
         --esi-cuatro-background-color: #228B22;
         --esi-cinco-background-color: #1E90FF;
-        min-height: 100vh
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -172,7 +173,7 @@ export class EsiApp extends LitElement {
     constructor() {
       super();
       this.title = 'Categorización ESI';
-      this.version = 'v7.23';
+      this.version = 'v0.1.7.23';
       // this.life_saving = 'NO';
       // this.high_risk = 'NO';
       // this.num_resources = 'Muchos';
@@ -184,8 +185,10 @@ export class EsiApp extends LitElement {
         { label: 'FR > 60', value: 'NO' },
         { label: 'SpO2 < 92%', value: 'NO' },
       ];
-      this.sgs_vitales_riesgo_1_3m = [
+      this.sgs_vitales_mediano_riesgo_1_3m = [
         { label: 'T > 38°C', value: 'NO' },
+      ];
+      this.sgs_vitales_riesgo_1_3m = [
         { label: 'FC > 180', value: 'NO' },
         { label: 'FR > 55', value: 'NO' },
         { label: 'SpO2 < 92%', value: 'NO' },
@@ -244,23 +247,16 @@ export class EsiApp extends LitElement {
       ];
 
       window.isUpdateAvailable.then((r) => {
-        if (r === true) {
-          window.prompt('Hay una nueva versión disponible, ¿recargar?', 'Recargar');
+        if (r === true && window.confirm('Hay una nueva versión disponible, ¿recargar?')) {
           window.location.reload();
         }
       });
     }
 
-    handleCheckboxChange(index, e, s) {
-      s == 'alto_riesgo' ? this.sgs_vitales_alto_riesgo[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo' ? this.sgs_vitales_riesgo[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_1_3m' ? this.sgs_vitales_riesgo_1_3m[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_3_12m' ? this.sgs_vitales_riesgo_3_12m[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_1_3a' ? this.sgs_vitales_riesgo_1_3a[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_3_5a' ? this.sgs_vitales_riesgo_3_5a[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_5_12a' ? this.sgs_vitales_riesgo_5_12a[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_12_18a' ? this.sgs_vitales_riesgo_12_18a[index].value = e.target.checked ? 'SI' : 'NO' : '';
-      s == 'riesgo_18a' ? this.sgs_vitales_riesgo_18a[index].value = e.target.checked ? 'SI' : 'NO' : '';
+    handleCheckboxChange(index, e, property) {
+      const list = this['sgs_vitales_' + property];
+      if (!list) return;
+      list[index].value = e.target.checked ? 'SI' : 'NO';
       this.requestUpdate();
     }
 
@@ -325,7 +321,7 @@ export class EsiApp extends LitElement {
 
     renderEsiThree() {
       return html`
-        ${this.num_resources == 'Muchos' ? html`<div class="esi-uno esi-tres">ESI 3</div>`: ''}
+        ${this.num_resources === 'Muchos' ? html`<div class="esi-uno esi-tres">ESI 3</div>`: ''}
         <vaadin-form-layout>
           <vaadin-combo-box
             clear-button-visible
@@ -378,36 +374,26 @@ export class EsiApp extends LitElement {
     }
 
     renderResourceAgeQuestions() {
-      if (this.high_risk === 'NO') {
-        return html`
-          <vaadin-form-layout>
-            <vaadin-combo-box
-              clear-button-visible
-              label="¿Cuántos recursos diferentes se necesitan?"
-              @change="${(e)=>this.num_resources = e.target.value}"
-              .value="${this.num_resources}"
-              .items="${['Ninguno', 'Uno', 'Muchos']}">
-            </vaadin-combo-box>
-          </vaadin-form-layout>
-          ${this.num_resources? '' : this.renderDefRecursos()}
-          ${
-            this.num_resources === 'Ninguno'?
-              this.renderEsiFive() : ''
-
-          }
-          ${
-            this.num_resources === 'Uno'?
-              this.renderEsiFour() : ''
-
-          }
-
-          ${
-            this.num_resources === 'Muchos'?
-              this.renderEsiThree() : ''
-          }
-        `;
-      }
-      return '';
+      if (this.high_risk !== 'NO') return '';
+      const resourceRenderers = {
+        Ninguno: () => this.renderEsiFive(),
+        Uno: () => this.renderEsiFour(),
+        Muchos: () => this.renderEsiThree(),
+      };
+      const renderer = resourceRenderers[this.num_resources];
+      return html`
+        <vaadin-form-layout>
+          <vaadin-combo-box
+            clear-button-visible
+            label="¿Cuántos recursos diferentes se necesitan?"
+            @change="${(e) => this.num_resources = e.target.value}"
+            .value="${this.num_resources}"
+            .items="${['Ninguno', 'Uno', 'Muchos']}">
+          </vaadin-combo-box>
+        </vaadin-form-layout>
+        ${this.num_resources ? '' : this.renderDefRecursos()}
+        ${renderer ? renderer() : ''}
+      `;
     }
 
     renderDefEsiUno() {
@@ -477,204 +463,85 @@ export class EsiApp extends LitElement {
     }
 
     renderSignosDeRiesgo(edad) {
-      if (edad === '<1m') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_alto_riesgo.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'alto_riesgo')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-              ${this.sgs_vitales_riesgo.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
+      const ageRanges = [
+        { range: '<1m', properties: ['alto_riesgo', 'riesgo'] },
+        { range: '1-3m', properties: ['mediano_riesgo_1_3m', 'riesgo_1_3m'] },
+        { range: '3-12m', properties: ['riesgo_3_12m'] },
+        { range: '1-3a', properties: ['riesgo_1_3a'] },
+        { range: '3-5a', properties: ['riesgo_3_5a'] },
+        { range: '5-12a', properties: ['riesgo_5_12a'] },
+        { range: '12-18a', properties: ['riesgo_12_18a'] },
+        { range: '>18a', properties: ['riesgo_18a'] },
+      ];
 
-          ${this.sgs_vitales_alto_riesgo.some(checkbox => checkbox.value === "SI") ? this.renderEsiTwo('Al menos') : ''}
-          ${this.sgs_vitales_riesgo.some(checkbox => checkbox.value === "SI") &&  this.sgs_vitales_alto_riesgo.some(checkbox => checkbox.value === "NO") ? this.renderEsiTwo('Considerar') : ''}
-        `;
-      }
-      if (edad === '1-3m') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_1_3m.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_1_3m')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
+      const ageRange = ageRanges.find(range => range.range === edad);
+      if (!ageRange) return '';
 
-          ${this.sgs_vitales_riesgo_1_3m.some(checkbox => checkbox.value === "SI") ? this.renderEsiTwo('Considerar') : ''}
-        `;
-      }
-      if (edad === '3-12m') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_3_12m.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_3_12m')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
+      const anySi = (property) =>
+        this['sgs_vitales_' + property].some(checkbox => checkbox.value === 'SI');
 
-          ${this.sgs_vitales_riesgo_3_12m.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-        `;
-      }
-      if (edad === '1-3a') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_1_3a.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_1_3a')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
+      const altoRiesgoActivo = ageRange.properties.includes('alto_riesgo') && anySi('alto_riesgo');
+      const otrosRiesgoActivos = ageRange.properties
+        .filter(p => p !== 'alto_riesgo')
+        .some(anySi);
+      const algunSignoActivo = altoRiesgoActivo || otrosRiesgoActivos;
 
-          ${this.sgs_vitales_riesgo_1_3a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-        `;
+      let outcome = '';
+      if (altoRiesgoActivo) {
+        outcome = this.renderEsiTwo('Al menos');
+      } else if (otrosRiesgoActivos) {
+        outcome = this.renderEsiTwo('Considerar');
       }
 
-      if (edad === '3-5a') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_3_5a.map(
+      return html`
+        <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
+        <vaadin-form-layout>
+          <div>
+            ${ageRange.properties.flatMap(property => {
+              const checkboxData = this['sgs_vitales_' + property];
+              return checkboxData.map(
                 (checkbox, index) => html`
                   <vaadin-checkbox
                     label="${checkbox.label}"
                     .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_3_5a')}"
+                    @change="${(e) => this.handleCheckboxChange(index, e, property)}"
                   ></vaadin-checkbox>
                 `
-              )}
-            </div>
-          </vaadin-form-layout>
+              )
+            })}
+          </div>
+        </vaadin-form-layout>
+        ${outcome}
+        ${algunSignoActivo ? this.renderDefEsiDos() : ''}
+      `;
+    }
 
-          ${this.sgs_vitales_riesgo_3_5a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-        `;
-      }
-
-      if (edad === '5-12a') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_5_12a.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_5_12a')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
-
-          ${this.sgs_vitales_riesgo_5_12a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-
-        `;
-      }
-
-      if (edad === '12-18a') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_12_18a.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_12_18a')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
-
-          ${this.sgs_vitales_riesgo_12_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-
-        `;
-      }
-
-      if (edad === '>18a') {
-        return html`
-          <label class="titulo_riesgo">¿Signos Vitales de Riesgo?</label>
-          <vaadin-form-layout>
-            <div>
-              ${this.sgs_vitales_riesgo_18a.map(
-                (checkbox, index) => html`
-                  <vaadin-checkbox
-                    label="${checkbox.label}"
-                    .checked="${checkbox.value === 'SI'}"
-                    @change="${(e) => this.handleCheckboxChange(index, e, 'riesgo_18a')}"
-                  ></vaadin-checkbox>
-                `
-              )}
-            </div>
-          </vaadin-form-layout>
-
-          ${this.sgs_vitales_riesgo_18a.some(checkbox => checkbox.value === "SI") ? html`<div class="esi-uno esi-tres">Considerar ESI 2</div>` : ''}
-        `;
-      }
-
-      return '';
+    static get SIGNO_PROPERTIES() {
+      return [
+        'alto_riesgo',
+        'riesgo',
+        'mediano_riesgo_1_3m',
+        'riesgo_1_3m',
+        'riesgo_3_12m',
+        'riesgo_1_3a',
+        'riesgo_3_5a',
+        'riesgo_5_12a',
+        'riesgo_12_18a',
+        'riesgo_18a',
+      ];
     }
 
     borradatosedad() {
-      this.sgs_vitales_alto_riesgo.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_1_3m.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_3_12m.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_1_3a.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_3_5a.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_5_12a.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_12_18a.forEach(checkbox => checkbox.value = "NO");
-      this.sgs_vitales_riesgo_18a.forEach(checkbox => checkbox.value = "NO");
+      EsiApp.SIGNO_PROPERTIES.forEach(property => {
+        this['sgs_vitales_' + property].forEach(checkbox => checkbox.value = 'NO');
+      });
+      this.requestUpdate();
     }
 
     reset() {
-      this.life_saving = null;
-      this.high_risk = null;
-      this.num_resources = null;
-      this.edad = null;
-      this.sgs_vitales = null;
+      ['life_saving', 'high_risk', 'num_resources', 'edad'].forEach(property => {
+        this[property] = null;
+      });
+      this.borradatosedad();
     }
-
 }
