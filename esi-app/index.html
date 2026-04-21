@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="Description" content="Put your description here.">
-  <base href="/esi-app/">
+  <!-- <base href="/esi-app/"> -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
   <link rel="manifest" href="./manifest.json">
@@ -41,9 +41,8 @@
   </script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", event => {
-      // we can move only if we are not in a browser's tab
-      isBrowser = matchMedia("(display-mode: browser)").matches;
+    document.addEventListener("DOMContentLoaded", () => {
+      const isBrowser = matchMedia("(display-mode: browser)").matches;
       if (!isBrowser) {
           window.moveTo(16, 16);
           window.resizeTo(780, 980);
