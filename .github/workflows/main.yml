@@ -1,29 +1,26 @@
 name: Build and Deploy
+
 on:
   push:
     branches:
-      - main  # Replace this with your default branch name if it's not "main"
+      - main  # Reemplazar por tu rama por defecto si no es "main"
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.8.0 # or another version if you prefer
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 18.8.0
+          cache: 'npm'
+          cache-dependency-path: esi-app/package-lock.json
 
       - name: Install and Build 🔧
         run: |
@@ -35,4 +32,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: esi-app/dist  # Replace with the directory of your build output if not "dist"
+          folder: esi-app/dist  # Reemplazar si tu carpeta de build es distinta
