@@ -3,7 +3,7 @@
   "description": "Aplicación entrenamiento Triage ESI",
   "license": "MIT",
   "author": "esi-app",
-  "version": "0.0.0",
+  "version": "0.1.4.26",
   "homepage": "https://nicoveraz.github.io/esi-app/",
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.js && npm run analyze -- --exclude dist",
