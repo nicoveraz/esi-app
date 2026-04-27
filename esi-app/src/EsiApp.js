@@ -173,7 +173,7 @@ export class EsiApp extends LitElement {
     constructor() {
       super();
       this.title = 'Categorización ESI';
-      this.version = 'v0.1.7.23';
+      this.version = 'v0.1.4.26';
       // this.life_saving = 'NO';
       // this.high_risk = 'NO';
       // this.num_resources = 'Muchos';
